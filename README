@@ -1,0 +1,88 @@
+gnm:     browseer for multifasta genome sequences with Vi/Vim like operation
+         locate specific position, search sequences etc.
+
+Compile and Install: With gcc, pthreads library, ncurses library available on Unix console,
+         Change directory into the downloaded gnm directory and type  make
+         Place the executable file "gnm" to where your PATH is set (such as /usr/local/bin).
+
+Usage:   gnm input.fasta
+
+Display: blackbar on top: Sequence Number / Total number of sequences on left
+                          Title line of the fasta sequence displayed
+         blackbar on bottom: From left; Cursor position, Region displayed, 
+                                        Length of the sequence, File name
+         inbetween blackbars: Nucleotide Sequence
+         2nd bottom line: Input command line
+         bottom line: system reports, like search results
+
+Commands: (Return key is expressed as "<" here)
+  
+  Move: cursor to specific position of specific sequence
+
+    5:300<   move to position 300 of sequence 5
+    3:<      move to position 1 of sequence 5
+    :300<    move to position 300 of the current sequence
+     
+    Just like Vi/Vim hjkl keys work as left, down, up, right (cursor keys works as well)
+
+    l        one base forward
+    k        one line up
+
+    numbers prior to hjkl works as well as vim 
+  
+    10j      10 lines down
+    3h       3 base forward
+    5l       5 base backward
+
+    Ctrl-f   one page forward
+    Ctrl-b   one page backward
+    Ctrl-u   half page up
+    Ctrl-d   half page down
+
+    L        move to the next sequence     (at first base)
+    H        move to the previous sequence (at first base)
+
+  Mark: mark cursor position with alphabet letters (a-z, A-Z) 
+
+    ma       current cursor position is set as 'a', the marked position is displayed reverse
+    'a       move to the marked position set to 'a' from anywhere 
+             (a single quart followed by a letter)
+    
+  Visual: select continuous base positions and specify the area with alphabet letters
+          specified area can be used as search query, described later
+
+    v         specify the cursor position as one end. V is indicated on upper left corner
+    vb        after moving the cursor, specify the position as another end of the region
+              and set the area as 'b'
+    `b        moveto the first position of the area from anywhere 
+              (a back quart followed by a letter)
+
+  Search: carries out sequence search.
+           < 10bp: find hits one by one
+           > 10bp: find all hits at first (takes few seconds for the first search)
+           hit sequence highlighted by light blue. light red for reverse complement hit
+           the highlighted color can be erased by reset commands described later
+           Search with capital letters (ATGC) hits both capital and lower case letters
+           Search with lower case letters (atgc) hits only lower case letters
+
+    /ATGC<   Search ATGC forward
+    ?ATGC<   Search ATGC backward
+    n        Search the same sequence forward
+    N        Search the same sequence backward
+
+    /2ATGCGCCTGG<    Search ATGCGCCTGG allowing upto 2base mismatches
+                     Mismatch bases are displayed with darker background
+                     Takes few seconds for the first search because the query is > 10bp
+
+    /vb<     Search sequence set as 'b' with the visual mode
+    /v1m<    Search sequence set as 'm' with the visual mode allowing upto 1 mismatch
+
+  Reset: rest attributes of marked positions, selected areas by visual, and search results
+    rr or ra    resets all
+    rm          resets marked positions
+    rv          resets marked areas by visual mode
+    rf or rs    resets search (find) results
+
+Quit:
+
+    :q<     ends gnm
