@@ -30,7 +30,7 @@ extern int show_origin;            // 表示画面左上端のゲノム塩基位
 extern int cpos;                   // カーソル塩基位置
 extern int cx;                     // カーソルX座標
 extern int cy;                     // カーソルY座標
-extern char message[512];          // 表示メッセージ
+extern char message[712];          // 表示メッセージ
 extern int moveto;                 // 移動先塩基位置
 extern char com_str[512];          // コマンド入力文字列  シーケンス
 extern char search_str[512];       // コマンド入力文字列  シーケンス
